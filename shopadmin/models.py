@@ -6,10 +6,16 @@ class Shop(models.Model):
     description = models.TextField()
     imageUrl = models.URLField()
 
+    def __str__(self):
+        return self.title
+
 class Category(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
+
+    def __str__(self):
+        return self.title
 
 class Product(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
@@ -20,3 +26,6 @@ class Product(models.Model):
     price = models.FloatField()
     images = models.JSONField()
     active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
