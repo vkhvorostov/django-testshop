@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  testshop:
+    image: testshop
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgresdb
+  postgresdb:
+    image: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=testshop
+      - POSTGRES_USER=testshop
+      - POSTGRES_PASSWORD=hello
+
+volumes:
+  pgdata:
