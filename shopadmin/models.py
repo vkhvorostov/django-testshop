@@ -14,6 +14,9 @@ class Category(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
 
+    class Meta:
+        verbose_name_plural = 'Categories'
+
     def __str__(self):
         return self.title
 
