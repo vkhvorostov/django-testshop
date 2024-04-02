@@ -4,7 +4,7 @@ from django.db import models
 class Shop(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    imageUrl = models.URLField()
+    imageUrl = models.ImageField(upload_to='shop_images/')
 
     def __str__(self):
         return self.title
