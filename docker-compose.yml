@@ -10,12 +10,13 @@ services:
       - 8000:8000
     depends_on:
       - postgresdb
+    volumes:
+      - ./media:/app/media:cached
+      - ./static:/app/static:cached
   postgresdb:
     image: postgres
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./media:/app/media
-      - ./static:/app/static
     ports:
       - 5432:5432
     environment:
