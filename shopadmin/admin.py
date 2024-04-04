@@ -4,7 +4,7 @@ from django.conf import settings
 from django.utils.html import format_html
 
 # Register your models here.
-from .models import Shop, Category, Product
+from .models import Shop, Category, Product, ProductImage
 
 class ShopAdminForm(forms.ModelForm):
     class Meta:
@@ -41,7 +41,21 @@ class CategoryAdmin(admin.ModelAdmin):
         return format_html('<a href="?parent={}">{}</a>', obj.id, childs_number)
     child_count.short_description = 'Child Categories'
 
-    
+class ProductImagesAdmin(admin.StackedInline):
+    model = ProductImage
+
+class ProductAdmin(admin.ModelAdmin):
+    inlines = [ProductImagesAdmin]
+    list_display = ('title', 'first_image')
+    list_display_links = ('title',)
+
+    class Meta:
+        model = Product
+
+    def first_image(self, obj):    
+        return format_html('<img src="{}" height="75" />', obj.images.order_by("id")[0].image.url)
+
+#admin.site.register(ProductImage)    
 admin.site.register(Shop, ShopAdmin)
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(Product)
+admin.site.register(Product, ProductAdmin)
